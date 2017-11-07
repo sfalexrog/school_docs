@@ -1,0 +1,3909 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 1.8cm
+\rightmargin 2cm
+\bottommargin 1.8cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Part*
+Машинная графика
+\end_layout
+
+\begin_layout Section
+Теоретическая часть
+\end_layout
+
+\begin_layout Subsection
+Основные понятия
+\end_layout
+
+\begin_layout Standard
+Рассмотрим понятие 
+\series bold
+экранной системы координат
+\series default
+.
+ Экранная система координат - 
+\series bold
+дискретная прямоугольная
+\series default
+ система координат, то есть координата каждой точки на экране - 
+\series bold
+два целых числа
+\series default
+.
+ Помимо этого, экранная система координат 
+\series bold
+ограничена
+\series default
+, то есть все точки имеют координаты по горизонтальной оси в диапазоне 
+\begin_inset Formula $\left[x_{s}^{min},x_{s}^{max}\right]$
+\end_inset
+
+ и по вертикальной оси в диапазоне 
+\begin_inset Formula $\left[y_{s}^{min},y_{s}^{max}\right]$
+\end_inset
+
+ (здесь и далее обозначение 
+\begin_inset Formula $x_{s},y_{s}$
+\end_inset
+
+ - координаты в экранной системе координат, индекс 
+\begin_inset Formula $s$
+\end_inset
+
+ обозначает 
+\begin_inset Formula $screen$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Как правило, начало экранной системы координат связывают с верхним левым
+ углом экрана или окна, в котором происходит отображение графики.
+ При этом координаты верхнего левого угла принимаются за 
+\begin_inset Formula $\left(x_{s}^{min},y_{s}^{min}\right)=\left(0,0\right)$
+\end_inset
+
+, а правого нижнего - за 
+\begin_inset Formula $\left(x_{s}^{max},y_{s}^{max}\right)=\left(w-1,h-1\right)$
+\end_inset
+
+, где 
+\begin_inset Formula $w$
+\end_inset
+
+ - 
+\begin_inset Formula $width$
+\end_inset
+
+ - ширина окна отображения, 
+\begin_inset Formula $h$
+\end_inset
+
+ - 
+\begin_inset Formula $height$
+\end_inset
+
+ - высота окна отображения.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/01_screen_coordinates_correct.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Экранная система координат
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Экранная-система-координат"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+При таком выборе граничных точек вертикальная ось получается направлена
+ вниз.
+\end_layout
+
+\begin_layout Standard
+У точек в экранной системе координат помимо расположения есть ещё 
+\series bold
+конечный размер
+\series default
+ и 
+\series bold
+цвет
+\series default
+.
+ Будем говорить, что множество всех точек данной экранной системы координат
+ составляют 
+\series bold
+изображение
+\series default
+.
+ Поскольку такое изображение состоит из конечного множества точек конечного
+ размера, будем называть такое изображение 
+\series bold
+растровым
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+В связи с этим введем термин 
+\series bold
+растеризация
+\series default
+ - построение 
+\series bold
+растрового изображения
+\series default
+ путем проецирования геометрических объектов на экранную систему координат.
+\end_layout
+
+\begin_layout Standard
+Следует обратить внимание на расположение правой нижней граничной точки
+ на рисунке 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Экранная-система-координат"
+
+\end_inset
+
+: выглядит так, как будто мы ошиблись и вместо граничной точки выбрали какую-то
+ другую.
+ Однако это не так: отмеченные 
+\begin_inset Quotes fld
+\end_inset
+
+точки
+\begin_inset Quotes frd
+\end_inset
+
+ на самом деле показывают верхний левый угол той точки, которая будет закрашена.
+ Если сделать цвет крайних точек серым, то можно получить следующее изображение,
+ как на рисунке 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Экранная-система-координат-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/01_screen_coordinates_pixels.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Экранная система координат с отмеченными крайними точками
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Экранная-система-координат-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Рассмотрим задачу растеризации графика, построенного в декартовой системе
+ координат.
+\end_layout
+
+\begin_layout Subsection
+Преобразования координат
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Преобразования-координат"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Пусть нам заданы координаты 
+\begin_inset Formula $x_{c}^{min}$
+\end_inset
+
+ и 
+\begin_inset Formula $x_{c}^{max}$
+\end_inset
+
+ в декартовой системе координат (индекс 
+\begin_inset Formula $c$
+\end_inset
+
+ означает 
+\begin_inset Formula $cartesian$
+\end_inset
+
+ - декартова) - начало и конец интервала по оси 
+\begin_inset Formula $oX$
+\end_inset
+
+, который требуется растеризовать.
+ Пусть также заданы (или вычислимы) координаты 
+\begin_inset Formula $y_{c}^{min}$
+\end_inset
+
+ и 
+\begin_inset Formula $y_{c}^{max}$
+\end_inset
+
+ - начало и конец интервала по оси 
+\begin_inset Formula $oY$
+\end_inset
+
+, который требуется растеризовать.
+ 
+\begin_inset Quotes fld
+\end_inset
+
+Совместим
+\begin_inset Quotes frd
+\end_inset
+
+ экранную и декартову системы координат так, чтобы точка 
+\begin_inset Formula $x_{c}^{min}$
+\end_inset
+
+ 
+\begin_inset Quotes fld
+\end_inset
+
+совпала
+\begin_inset Quotes frd
+\end_inset
+
+ с 
+\begin_inset Formula $x_{s}^{min}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{c}^{max}$
+\end_inset
+
+ - с 
+\begin_inset Formula $x_{s}^{max}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{c}^{max}$
+\end_inset
+
+ - c 
+\begin_inset Formula $y_{s}^{min}$
+\end_inset
+
+, 
+\begin_inset Formula $y_{c}^{min}$
+\end_inset
+
+ - с 
+\begin_inset Formula $y_{s}^{max}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/02_screen_cartesian_fixed.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Декартова и экранная системы координат
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Введём дополнительные обозначения:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\left(x_{s}^{0},y_{s}^{0}\right)$
+\end_inset
+
+ - расположение начала координат декартовой системы координат в экранной
+ системе координат,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m_{x}$
+\end_inset
+
+ - масштаб для перевода из декартовой системы координат в экранную по оси
+ 
+\begin_inset Formula $oX$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $m_{y}$
+\end_inset
+
+ - масштаб для перевода из декартовой системы координат в экранную по оси
+ 
+\begin_inset Formula $oY$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+В этих обозначениях перевод из декартовой системы координат будет выглядеть
+ так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+x_{s}=\left\lfloor x_{s}^{0}+m_{x}\cdot x_{c}\right\rfloor \\
+y_{s}=\left\lfloor y_{s}^{0}-m_{y}\cdot y_{c}\right\rfloor 
+\end{cases}\label{eq:conv_to_screen}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+В системе (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:conv_to_screen"
+
+\end_inset
+
+) скобки 
+\begin_inset Formula $\lfloor\rfloor$
+\end_inset
+
+ означают округление в меньшую сторону.
+\end_layout
+
+\begin_layout Standard
+Исходя из этого уравнения и соответствия точек, найдём выражения для неизвестных
+ величин.
+\end_layout
+
+\begin_layout Enumerate
+Поскольку 
+\begin_inset Formula $x_{s}^{min}$
+\end_inset
+
+ совпадает с 
+\begin_inset Formula $x_{c}^{min}$
+\end_inset
+
+, а 
+\begin_inset Formula $x_{s}^{max}$
+\end_inset
+
+- с 
+\begin_inset Formula $x_{c}^{max}$
+\end_inset
+
+, запишем:
+\begin_inset Formula 
+\[
+\begin{cases}
+x_{s}^{min}=\left\lfloor x_{s}^{0}+m_{x}\cdot x_{c}^{min}\right\rfloor \\
+x_{s}^{max}=\left\lfloor x_{s}^{0}+m_{x}\cdot x_{c}^{max}\right\rfloor 
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Допуская, что в правых частях 
+\begin_inset Formula $\left\lfloor a\right\rfloor =a$
+\end_inset
+
+, получаем:
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+x_{s}^{min}=x_{s}^{0}+m_{x}\cdot x_{c}^{min}\\
+x_{s}^{max}=x_{s}^{0}+m_{x}\cdot x_{c}^{max}
+\end{cases}\label{eq:continuous_equations}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Решая систему (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:continuous_equations"
+
+\end_inset
+
+), получаем:
+\begin_inset Formula 
+\[
+\begin{cases}
+m_{x}\left(x_{c}^{max}-x_{c}^{min}\right)=x_{s}^{max}-x_{s}^{min}\\
+x_{s}^{0}=x_{s}^{min}-m_{x}\cdot x_{c}^{min}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+m_{x}=\frac{x_{s}^{max}-x_{s}^{min}}{x_{c}^{max}-x_{c}^{min}}\\
+x_{s}^{0}=x_{s}^{min}-m_{x}\cdot x_{c}^{min}
+\end{cases}\label{eq:mx_x0_derived}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Заметим, что вторая строка системы (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mx_x0_derived"
+
+\end_inset
+
+) содержит величину 
+\begin_inset Formula $m_{x}$
+\end_inset
+
+, формально неизвестную, однако её выражение указано в первой строке системы,
+ и для упрощения реализации следует вычислять 
+\begin_inset Formula $x_{0}^{s}$
+\end_inset
+
+ по указанной формуле
+\end_layout
+
+\begin_layout Enumerate
+Заметим, что по вертикальной оси 
+\begin_inset Formula $y_{s}^{min}$
+\end_inset
+
+ будет совпадать с 
+\begin_inset Formula $y_{c}^{max}$
+\end_inset
+
+, а 
+\begin_inset Formula $y_{s}^{max}$
+\end_inset
+
+ - с 
+\begin_inset Formula $y_{c}^{min}$
+\end_inset
+
+.
+ Это обусловлено различным направлением вертикальных осей в декартовой и
+ экранной системах координат.
+ Запишем:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{cases}
+y_{s}^{min}=\left\lfloor y_{s}^{0}-m_{y}\cdot y_{c}^{max}\right\rfloor \\
+y_{s}^{max}=\left\lfloor y_{s}^{0}-m_{y}\cdot y_{c}^{min}\right\rfloor 
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Принимая аналогичное п.1 допущение, получаем:
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+y_{s}^{min}=y_{s}^{0}-m_{y}\cdot y_{c}^{max}\\
+y_{s}^{max}=y_{s}^{0}-m_{y}\cdot y_{c}^{min}
+\end{cases}\label{eq:continuous_y}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Решая систему, получаем:
+\begin_inset Formula 
+\[
+\begin{cases}
+m_{y}\left(y_{c}^{max}-y_{c}^{min}\right)=y_{s}^{max}-y_{s}^{min}\\
+y_{s}^{0}=y_{s}^{min}+m_{y}\cdot y_{c}^{max}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{cases}
+m_{y}=\frac{y_{s}^{max}-y_{s}^{min}}{y_{c}^{max}-y_{c}^{min}}\\
+y_{s}^{0}=y_{s}^{min}+m_{y}\cdot y_{c}^{max}
+\end{cases}\label{eq:my_y0_derived}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Переход от экранных координат к декартовым, строго говоря, должен давать
+ не одну точку, а некоторую область, поскольку значения в точках 
+\begin_inset Formula $\left[x_{c},x_{c}+\frac{1}{m_{x}}\right)$
+\end_inset
+
+ будут проецироваться в одну и ту же точку на горизонтальной оси экранных
+ координат (при условии, конечно же, что 
+\begin_inset Formula $x_{c}\cdot m_{x}\in\mathbb{{Z}}$
+\end_inset
+
+).
+ Тем не менее, мы можем указать, в какую точку в декартовых координатах
+ будет проецироваться левый верхний угол точки экранных координат:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{cases}
+x_{c}=\frac{x_{s}-x_{s}^{0}}{m_{x}}\\
+y_{c}=\frac{y_{s}^{0}-y_{s}}{m_{y}}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Заметим, что в общем случае величины 
+\begin_inset Formula $y_{c}^{min}$
+\end_inset
+
+ и 
+\begin_inset Formula $y_{c}^{max}$
+\end_inset
+
+ могут быть не заданы.
+ Как правило, в таких случаях прибегают к одному из следующих методов:
+\end_layout
+
+\begin_layout Itemize
+Если требуется построить график функции 
+\begin_inset Formula $y=f(x)$
+\end_inset
+
+, то вычисляется (точно или приближенно) наименьшее и наибольшее значения
+ заданной функции на отрезке 
+\begin_inset Formula $\left[x_{c}^{min},x_{c}^{max}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Если требуется выполнить условие 
+\begin_inset Formula $m_{x}=m_{y}$
+\end_inset
+
+, то значения 
+\begin_inset Formula $y_{c}^{min}$
+\end_inset
+
+ и 
+\begin_inset Formula $y_{c}^{max}$
+\end_inset
+
+ допускается не вычислять.
+ При этом значение 
+\begin_inset Formula $y_{s}^{0}$
+\end_inset
+
+ принимается равным 
+\begin_inset Formula $\frac{y_{s}^{max}-y_{s}^{min}}{2}$
+\end_inset
+
+ или вычисляется из значений функции (например, как некоторое усредненное
+ значение).
+ В последнем случае можно принять, что среднее значение функции на отрезке
+ должно соответствовать центру изображения, и тогда вычислить значение 
+\begin_inset Formula $y_{s}^{0}$
+\end_inset
+
+ как
+\begin_inset Formula 
+\[
+\frac{y_{s}^{max}-y_{s}^{min}}{2}=y_{s}^{0}-m_{y}\frac{\int_{x_{c}^{min}}^{x_{c}^{max}}f(x)dx}{x_{c}^{max}-x_{c}^{min}}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+y_{s}^{0}=\frac{y_{s}^{max}-y_{s}^{min}}{2}+m_{y}\frac{\int_{x_{c}^{min}}^{x_{c}^{max}}f(x)dx}{x_{c}^{max}-x_{c}^{min}}\label{eq:avg_precise}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Заметим, что в зависимости (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:avg_precise"
+
+\end_inset
+
+) можно заменить интеграл на среднее арифметическое значений в точках, соответст
+вующих экранным координатам:
+\begin_inset Formula 
+\[
+y_{s}^{0}=\frac{y_{s}^{max}-y_{s}^{min}}{2}+m_{y}\frac{\sum_{x_{s}=x_{s}^{min}}^{x_{s}^{max}}f(x_{c}(x_{s}))}{x_{s}^{max}-x_{s}^{min}}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+где 
+\begin_inset Formula 
+\[
+x_{c}(x_{s})=\frac{x_{s}-x_{s}^{0}}{m_{x}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Практические рекомендации
+\end_layout
+
+\begin_layout Subsection
+Модули в языке Pascal.
+ Модуль GraphABC
+\end_layout
+
+\begin_layout Standard
+В современных редакциях языка программирования Pascal существует концепция
+ подключаемых 
+\series bold
+модулей
+\series default
+.
+ Модулем может являться файл с расширением 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+.pas
+\end_layout
+
+\end_inset
+
+, в начале которого стоит конструкция 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+unit название_модуля;
+\end_layout
+
+\end_inset
+
+, или предварительно скомпилированный модуль (в среде 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+ - с расширением 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+.pcu
+\end_layout
+
+\end_inset
+
+).
+ В качестве названия модуля могут выступать латинские буквы, цифры и символы
+ подчёркивания.
+ Название модуля, указанное после ключевого слова 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+unit
+\end_layout
+
+\end_inset
+
+, должно совпадать с именем файла (без расширения).
+\end_layout
+
+\begin_layout Standard
+Модули используются для выделения и группирования функций и процедур, а
+ также констант, пользовательских типов и глобальных объектов, в отдельные
+ единицы компиляции.
+ Это может делаться для ускорения процесса компиляции программы (модули,
+ в которых не произошло изменений, можно использовать повторно), для разделения
+ программы на осмысленные элементы (например, модуль работы с файлами, модуль
+ обработки математической модели, модуль вывода отчёта на экран), для упрощения
+ командной работы над проектом (в команде каждый человек может работать
+ со своим модулем, это упрощает процесс слияния изменений).
+ Кроме того, модули используются для взаимодействия со 
+\series bold
+сторонними библиотеками
+\series default
+, возможно, написанными на других языках программирования.
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы указать, что в программе используется тот или иной модуль,
+ следует в начале программы (перед объявлением собственных типов, констант,
+ функций и процедур) указать:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Пример подключения модуля }
+\end_layout
+
+\begin_layout Plain Layout
+
+uses
+\end_layout
+
+\begin_layout Plain Layout
+
+  PABCSystem, System, GraphABC;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ далее идёт исходный код программы, }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ использующей те или иные элементы  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ указанных модулей.
+                 }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Подключение модуля позволяет использовать все 
+\series bold
+экспортируемые
+\series default
+ (то есть являющиеся интерфейсом модуля) элементы этого модуля: функции,
+ процедуры, типы данных, константы и переменные.
+ Кроме того, при загрузке модуля может выполняться некоторый код, называемый
+ кодом 
+\series bold
+инициализации
+\series default
+ модуля: так, при подключенном модуля 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GraphABC
+\end_layout
+
+\end_inset
+
+, при запуске программы будет создаваться окно графического вывода.
+ При этом в самой программе будут доступны функции и процедуры для работы
+ с этим окном.
+\end_layout
+
+\begin_layout Standard
+Рассмотрим подробнее модуль 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GraphABC
+\end_layout
+
+\end_inset
+
+, распространяющийся с компилятором 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Этот модуль используется для вывода графики на экран.
+ Поскольку современные операционные системы используют концепцию 
+\series bold
+окон
+\series default
+ для представления своих приложений, данный модуль позволяет выводить графику
+ не в эксклюзивном режиме (когда всё экранное пространство занято одной
+ программой), а в специально создаваемое для этого окно.
+ Это окно создаётся автоматически при запуске программы.
+ При этом вывод с помощью процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+writeln
+\end_layout
+
+\end_inset
+
+ будет производиться в это окно, а чтение с помощью процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+readln
+\end_layout
+
+\end_inset
+
+ будет создавать в окне специальную строку ввода
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/03_graphabc_min.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Запуск программы с подключенным модулем 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GraphABC
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+При выводе графики на экран с помощью модуля 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GraphABC
+\end_layout
+
+\end_inset
+
+ используются концепции 
+\series bold
+пера
+\series default
+ и 
+\series bold
+кисти
+\series default
+.
+ Перо используется для задания параметров отображения 
+\series bold
+линий
+\series default
+, кисть - для задания параметров 
+\series bold
+заливки
+\series default
+.
+ Помимо этого, присутствует возможность задавать цвет для каждого пикселя
+ окна индивидуально.
+\end_layout
+
+\begin_layout Standard
+Будем рассматривать часть процедур и функций, доступных при подключении
+ модуля 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GraphABC
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Функция 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+window
+\end_layout
+
+\end_inset
+
+ возвращает 
+\series bold
+объект
+\series default
+, описывающий текущее состояние окна.
+ 
+\series bold
+Свойствами
+\series default
+ этого объекта являются размеры окна, его положение на экране, его название
+ (заголовок), а также флаг, указывающий, может ли пользователь изменять
+ размеры окна.
+ Доступ к этим свойствам осуществляется с помощью оператора 
+\begin_inset Quotes fld
+\end_inset
+
+точка
+\begin_inset Quotes frd
+\end_inset
+
+.
+ Покажем, как можно пользоваться этими свойствами:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+uses
+\end_layout
+
+\begin_layout Plain Layout
+
+  GraphABC;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Устанавливаем название окна     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  window.Caption := 'Hello GraphABC';
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Устанавливаем расположение окна }
+\end_layout
+
+\begin_layout Plain Layout
+
+  window.Top := 200;
+\end_layout
+
+\begin_layout Plain Layout
+
+  window.Left := 300;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Выводим размер окна на экран    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  writeln('Window size: ',
+\end_layout
+
+\begin_layout Plain Layout
+
+          window.Width, 'x',
+\end_layout
+
+\begin_layout Plain Layout
+
+          window.Height);
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := 1 to 10 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    var a : Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+    readln(a);
+\end_layout
+
+\begin_layout Plain Layout
+
+    writeln('You entered: ', a);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/04_graphabc_demo.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Пример работы программы
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Обращение к пикселям (точкам в экранных координатах) можно производить с
+ помощью функции 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GetPixel
+\end_layout
+
+\end_inset
+
+ и процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PutPixel
+\end_layout
+
+\end_inset
+
+.
+ Их описание:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+function GetPixel(x, y: Integer): Color
+\end_layout
+
+\end_inset
+
+ - функция, возвращающая значение цвета точки с координатами 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x, y
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+procedure PutPixel(x, y: Integer; c: Color)
+\end_layout
+
+\end_inset
+
+ - процедура, устанавливающая цвет точки с координатами 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x, y
+\end_layout
+
+\end_inset
+
+ в значение 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+c
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+В качестве цветов можно использовать определённые в модуле 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+GraphABC
+\end_layout
+
+\end_inset
+
+ константы, либо задавать его, указывая интенсивности красного, зелёного
+ и синего цветов.
+\end_layout
+
+\begin_layout Standard
+Для рисования линий используются процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Line
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+LineTo
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MoveTo
+\end_layout
+
+\end_inset
+
+.
+ Их описание:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+procedure Line(x1, y1, x2, y2: Integer)
+\end_layout
+
+\end_inset
+
+ - процедура, рисующая линию от точки 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(x1, y1)
+\end_layout
+
+\end_inset
+
+ до точки 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(x2, y2)
+\end_layout
+
+\end_inset
+
+.
+ В качестве параметров линии будет использоваться текущее состояние объекта
+ 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Pen
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+procedure LineTo(x, y: Integer)
+\end_layout
+
+\end_inset
+
+ - процедура, проводящая линию от текущего положения 
+\series bold
+графического курсора
+\series default
+ до указанной точки 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(x, y)
+\end_layout
+
+\end_inset
+
+.
+ При этом новым положением графического курсора станет точка 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(x, y)
+\end_layout
+
+\end_inset
+
+.
+ По умолчанию в начале работы программы графический курсор находится в точке
+ 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(0, 0)
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+procedure MoveTo(x, y: Integer)
+\end_layout
+
+\end_inset
+
+ - процедура, перемещающая графический курсор в точку 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(x, y)
+\end_layout
+
+\end_inset
+
+.
+ Перемещение происходит без рисования линии.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+uses 
+\end_layout
+
+\begin_layout Plain Layout
+
+  GraphABC;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Шаг изменения координат }
+\end_layout
+
+\begin_layout Plain Layout
+
+var step: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Указываем размер окна и шаг }
+\end_layout
+
+\begin_layout Plain Layout
+
+  window.Width := 400;
+\end_layout
+
+\begin_layout Plain Layout
+
+  window.Height := 400;
+\end_layout
+
+\begin_layout Plain Layout
+
+  step := 20;
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := 0 to window.Width div step do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    var x := i * step;
+\end_layout
+
+\begin_layout Plain Layout
+
+    var y := window.Height - i * step;
+\end_layout
+
+\begin_layout Plain Layout
+
+    var x2 := window.Width - x;
+\end_layout
+
+\begin_layout Plain Layout
+
+    var y2 := window.Height - y;
+\end_layout
+
+\begin_layout Plain Layout
+
+    { Верхняя часть рисунка - красная }
+\end_layout
+
+\begin_layout Plain Layout
+
+    Pen.Color := clRed;
+\end_layout
+
+\begin_layout Plain Layout
+
+    Line(0, y, x, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+    { Нижняя - синяя }
+\end_layout
+
+\begin_layout Plain Layout
+
+    Pen.Color := clBlue;
+\end_layout
+
+\begin_layout Plain Layout
+
+    MoveTo(x2, window.Height);
+\end_layout
+
+\begin_layout Plain Layout
+
+    LineTo(window.Width, y2);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/05_graphabc_lines2.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Пример работы программы
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Это не является полным описанием всех возможностей модуля GraphABC, однако
+ для текущего задания этого должно быть достаточно.
+\end_layout
+
+\begin_layout Subsection
+Внутренние функции
+\end_layout
+
+\begin_layout Standard
+В языках программирования семейства Pascal существует возможность определять
+ процедуры и функции внутри других процедур и функций.
+ Такие 
+\begin_inset Quotes fld
+\end_inset
+
+внутренние
+\begin_inset Quotes frd
+\end_inset
+
+ функции получают доступ к локальным переменным заключающей их функции или
+ процедуры.
+ При этом вызывать эти 
+\begin_inset Quotes fld
+\end_inset
+
+внутренние
+\begin_inset Quotes frd
+\end_inset
+
+ функции возможно только из тела заключающей функции или из функций, расположенн
+ом на том же уровне.
+\end_layout
+
+\begin_layout Standard
+Использование таких функций позволяет реализовать принцип 
+\series bold
+инкапсуляции
+\series default
+ (сокрытия деталей реализации от остальных частей программы) и тем самым
+ ограничить количество потенциальных ошибок в программе.
+ С другой стороны, использование таких внутренних функций позволяет упростить
+ код программы.
+\end_layout
+
+\begin_layout Standard
+Приведём пример использования данной возможности:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily},tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+uses
+\end_layout
+
+\begin_layout Plain Layout
+
+  GraphABC;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Функция, график которой мы будем строить }
+\end_layout
+
+\begin_layout Plain Layout
+
+function plotted_function(x: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  result := x * x - 3 * x;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Процедура построения графика функции f }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Параметры:                             }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  f: функция одной переменной, график   }
+\end_layout
+
+\begin_layout Plain Layout
+
+{     которой требуется построить        }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  xmin, xmax: границы области построения}
+\end_layout
+
+\begin_layout Plain Layout
+
+{     графика функции по горизонтальной  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{     оси                                }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  ymin, ymax: границы области построения}
+\end_layout
+
+\begin_layout Plain Layout
+
+{     графика функции по вертикальной оси}
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure Plot(f: function(x: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+               xmin, xmax: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+               ymin, ymax: Real);
+\end_layout
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Масштабы по осям }
+\end_layout
+
+\begin_layout Plain Layout
+
+  mx, my: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Начало координат ДСК }
+\end_layout
+
+\begin_layout Plain Layout
+
+  x0s, y0s: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Вспомогательные функции для перевода }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { в различные системы координат:       }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { экранная -> декартова по оси oX:     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  function toXs(xc: Real): Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+  begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    result := floor(x0s + mx * xc);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { экранная -> декартова по оси oY:     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  function toYs(yc: Real): Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+  begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    result := floor(y0s - my * yc);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { декартова -> экранная по оси oX:     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  function toXc(xs: Integer): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    result := (xs - x0s) / mx;
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { декартова -> экранная по оси oY:     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  function toYc(ys: Integer): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    result := (y0s - ys) / my;
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Задаём границы в экранных координатах }
+\end_layout
+
+\begin_layout Plain Layout
+
+  var xsmin := 0; var xsmax := window.Width - 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+  var ysmin := 0; var ysmax := window.Height - 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Пересчитываем масштаб }
+\end_layout
+
+\begin_layout Plain Layout
+
+  mx := (xsmax - xsmin) / (xmax - xmin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  my := (ysmax - ysmin) / (ymax - ymin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Находим начало координат ДСК }
+\end_layout
+
+\begin_layout Plain Layout
+
+  x0s := xsmin - mx * xmin;
+\end_layout
+
+\begin_layout Plain Layout
+
+  y0s := ysmin + my * ymax;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Находим координаты первой точки }  
+\end_layout
+
+\begin_layout Plain Layout
+
+  var xs, ys: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+  xs := toXs(xmin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  ys := toYs(f(xmin));
+\end_layout
+
+\begin_layout Plain Layout
+
+  MoveTo(xs, ys);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Строим весь оставшийся график }
+\end_layout
+
+\begin_layout Plain Layout
+
+  for xs := xsmin + 1 to xsmax do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    var xc := toXc(xs);
+\end_layout
+
+\begin_layout Plain Layout
+
+    var yc := f(xc);
+\end_layout
+
+\begin_layout Plain Layout
+
+    ys := toYs(yc);
+\end_layout
+
+\begin_layout Plain Layout
+
+    LineTo(xs, ys);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  Plot(plotted_function, -2, 3, -4, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Здесь внутренние функции использованы для упрощения написания кода процедуры,
+ строящей график.
+ Вместо написания сравнительно громоздкого выражения для проецирования точки
+ из декартовой системы координат в экранную теперь достаточно использовать
+ функции 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+toXs()
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+toYs()
+\end_layout
+
+\end_inset
+
+, описанные на строках 32-35 и 38-41 приведенного листинга.
+ Обратный перевод осуществляется функциями 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+toXc()
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+toYc()
+\end_layout
+
+\end_inset
+
+.
+ Заметим, что вне указанной процедуры использование данных функций бессмысленно
+ (поскольку вне этой процедуры нет масштабов и положения начала координат
+ декартовой системы координат), и реализация их в виде внутренних функций
+ оправдана и очевидна.
+ Заметим также, что если бы мы нашли ошибку в выводе выражений для этих
+ функций, нам достаточно было бы изменить только реализацию одной или нескольких
+ функций, а не искать по коду вхождение неправильного выражения.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/06_grapher.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Пример работы указанной программы
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Пример-работы-grapher"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Пример работы данной программы приведен на рисунке 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Пример-работы-grapher"
+
+\end_inset
+
+.
+ Следует отметить, что у приведенной программы есть несколько недостатков:
+\end_layout
+
+\begin_layout Itemize
+На экране не отображаются координатные оси, что затрудняет оценку самого
+ графика;
+\end_layout
+
+\begin_layout Itemize
+На экране также отсутствуют какие-либо метки, позволяющие оценить масштаб
+ графика;
+\end_layout
+
+\begin_layout Itemize
+Процедура написана таким образом, что требует указания границ как по горизонталь
+ной, так и по вертикальной оси; в результате часть графика не отображается
+ на экране, а сам график занимает не всё пространство по вертикали.
+\end_layout
+
+\begin_layout Standard
+Одним из заданий будет доработка (или полное переписывание) данной программы
+ с целью устранения указанных недостатков.
+\end_layout
+
+\begin_layout Subsection
+Массивы
+\end_layout
+
+\begin_layout Standard
+При построении графиков функций, как было отмечено в разделе 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Преобразования-координат"
+
+\end_inset
+
+, масштаб по вертикальной оси может быть вычислен, если известно минимальное
+ и максимальное значение функции на отрезке.
+ Одним из способов приближенного определения этих значений является вычисление
+ значений функции на отрезке с заданным шагом.
+ Этим шагом может быть, например, расстояние между двумя соседними точками
+ экранной системы координат, спроецированное на декартову систему координат.
+\end_layout
+
+\begin_layout Standard
+Однако вычисление значений некоторых функций может быть весьма вычислительно
+ затратно (например, при построении графиков функций вида 
+\begin_inset Formula $f\left(x\right)=\int_{0}^{x}g\left(t\right)dt$
+\end_inset
+
+).
+ В таком случае разумно сократить количество вызовов функции, и вычислять
+ её для каждой точки лишь один раз.
+ При этом значения этой функции будут требоваться как минимум дважды: при
+ вычислении масштаба и непосредственно при построении графика.
+ Для того, чтобы избежать повторных вычислений, можно использовать 
+\series bold
+массивы
+\series default
+ для хранения значений функции.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Массивами
+\series default
+ будем называть 
+\series bold
+непрерывную, типизированную область памяти
+\series default
+.
+ В массиве подряд записаны значения указанного 
+\series bold
+типа
+\series default
+ (отсюта - типизированность массива; типом массива будем называть тип хранимых
+ элементов).
+ За счёт 
+\series bold
+непрерывности
+\series default
+ доступ к каждому элементу осуществляется за постоянное время.
+ Для указания, к какому именно элементу нужно обратиться, используется 
+\series bold
+индекс
+\series default
+ - целое число, задающее порядковый номер элемента в массиве.
+ Индексация в массивах сквозная, то есть между элементами с индексом 3 и
+ 5 обязательно должен быть элемент с индексом 4.
+ Традиционно в языке программирования Паскаль индексация могла начинаться
+ с любого целого числа (обычно - с единицы), однако в 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+ рекомендуется использовать нумерацию с нуля.
+\end_layout
+
+\begin_layout Standard
+Существуют 
+\series bold
+статические
+\series default
+ и 
+\series bold
+динамические
+\series default
+ массивы.
+ Различие в них состоит в том, что размер 
+\series bold
+статических
+\series default
+ массивов известен заранее и неизменен, в то время как 
+\series bold
+динамические
+\series default
+ массивы способны изменять свой размер, но требуют задания своего размера
+ во время работы программы.
+ В текущей реализации 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+ динамические массивы являются предпочтительными, поскольку реализация статическ
+их массивов использует, на самом деле, динамические массивы, размер которых
+ задаётся непосредственно перед их применением, а индекс просто пересчитывается.
+ Статические массивы в 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+ работают несколько медленнее динамических, при этом передача их как параметров
+ функций затруднительно.
+\end_layout
+
+\begin_layout Standard
+Объявление массивов происходит следующим образом:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Статический массив: размер указывается при  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { объявлении, тип - после ключевого слова  of }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Индексация: первый элемент будет иметь индекс }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { -5, последний - 12.
+ Всего в массиве будет     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { 12 - (-5) + 1 = 18 элементов                  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  static_array: array[-5..12] of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Динамический массив: размер не указывается, }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { указывается только тип хранимых элементов   }
+\end_layout
+
+\begin_layout Plain Layout
+
+  dynamic_array: array of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Допускается указывать в качестве типа хранимых }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { элементов массивы; в этом случае говорят о     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { многомерных массивах                           }
+\end_layout
+
+\begin_layout Plain Layout
+
+  multidimensional_array: array of array of Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Перед использованием динамического массива     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { следует задать его размер с помощью процедуры  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { SetLength                                      }
+\end_layout
+
+\begin_layout Plain Layout
+
+  SetLength(dynamic_array, 10);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { При использовании многомерных массивов следует }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { указывать размер "внешнего" массива, после чего}
+\end_layout
+
+\begin_layout Plain Layout
+
+  { в цикле задавать размеры "внутренних" массивов.}
+\end_layout
+
+\begin_layout Plain Layout
+
+  SetLength(multidimensional_array, 5);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { В языке PascalABC.Net массивы "знают" свой     }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { размер; его можно получить из свойства Length  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { При этом последний элемент будет иметь индекс  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { имя_массива.Length - 1 (поскольку индексация   }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { начинается с нуля, а количество элементов равно}
+\end_layout
+
+\begin_layout Plain Layout
+
+  { значению свойства Length данного массива)      }
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := 0 to multidimensional_array.Length do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    { В качестве длины массива можно указывать любое }
+\end_layout
+
+\begin_layout Plain Layout
+
+    { неотрицательное целочисленное выражение        }
+\end_layout
+
+\begin_layout Plain Layout
+
+    SetLength(multidimensional_array[i], i + 5);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  writeln(multidimensional_array.Length);
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := 0 to multidimensional_array.Length - 1 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    writeln(multidimensional_array[i].Length);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Доступ к элементам массива осуществляется с помощью квадратных скобок: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+dynamic_array[i]
+\end_layout
+
+\end_inset
+
+.
+ Элемент, полученный с помощью квадратных скобок, возможно использовать
+ как обычную переменную:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Запись в массив с клавиатуры }
+\end_layout
+
+\begin_layout Plain Layout
+
+readln(static_array[3]);
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Запись в массив присвоением  }
+\end_layout
+
+\begin_layout Plain Layout
+
+static_array[0] := static_array[-3] + static_array[3];
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Вывод элемента на экран      }
+\end_layout
+
+\begin_layout Plain Layout
+
+writeln(static_array[0]);
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Использование выражения в качестве индекса }
+\end_layout
+
+\begin_layout Plain Layout
+
+var n := 5;
+\end_layout
+
+\begin_layout Plain Layout
+
+for var i := 0 to n - 1 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  dynamic_array[n - i] := static_array[i] + static_array[i - 1];
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Рассмотрим использование массива в процедуре 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Plot
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Размер массива примем равным количеству точек на горизонтальной оси экранной
+ системы координат: оно равно 
+\begin_inset Formula $x_{s}^{max}-x_{s}^{min}+1$
+\end_inset
+
+.
+ В каждом элементе массива будем хранить значение функции в данной точке.
+ При этом следует помнить, что при вычислении очередной точки следует переводить
+ координату по горизонтальной оси из экранной системы координат в декартову.
+\end_layout
+
+\begin_layout Standard
+В коде это будет выглядеть так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily},tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Листинг основан на предыдущем, в котором }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ была описана процедура Plot.
+ Отметим     }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ основные изменения:                      }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Процедура построения графика функции f }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Параметры:                             }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  f: функция одной переменной, график   }
+\end_layout
+
+\begin_layout Plain Layout
+
+{     которой требуется построить        }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  xmin, xmax: границы области построения}
+\end_layout
+
+\begin_layout Plain Layout
+
+{     графика функции по горизонтальной  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{     оси                                }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Заметим, что процедура больше не принимает }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ параметров ymin, ymax                      }
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure Plot(f: function(x: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+               xmin, xmax: Real);
+\end_layout
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Масштабы по осям }
+\end_layout
+
+\begin_layout Plain Layout
+
+  mx, my: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Начало координат ДСК }
+\end_layout
+
+\begin_layout Plain Layout
+
+  x0s, y0s: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Вспомогательные функции для перевода }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { в различные системы координат описаны}
+\end_layout
+
+\begin_layout Plain Layout
+
+  { идентично предыдущему листингу       }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Массив для хранения значений функции }
+\end_layout
+
+\begin_layout Plain Layout
+
+  values: array of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Задаём границы в экранных координатах }
+\end_layout
+
+\begin_layout Plain Layout
+
+  var xsmin := 0; var xsmax := window.Width - 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+  var ysmin := 0; var ysmax := window.Height - 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Пересчитываем масштаб }
+\end_layout
+
+\begin_layout Plain Layout
+
+  mx := (xsmax - xsmin) / (xmax - xmin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { ВАЖНО: Надо пересчитать X-координату  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { начала координат ДСК как можно раньше!}
+\end_layout
+
+\begin_layout Plain Layout
+
+  x0s := xsmin - mx * xmin;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Находим минимум и максимум функции }
+\end_layout
+
+\begin_layout Plain Layout
+
+  var ymin, ymax: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Массив values - динамический, устанавливаем }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { его длину по указанному выражению           }
+\end_layout
+
+\begin_layout Plain Layout
+
+  SetLength(values, xsmax - xsmin + 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  ymin := f(xmin); ymax := f(xmin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := xsmin to xsmax - 1 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    values[i - xsmin] := f(toXc(i));
+\end_layout
+
+\begin_layout Plain Layout
+
+    { Минимум и максимум функции находим }
+\end_layout
+
+\begin_layout Plain Layout
+
+    { одновременно с заполнением массива }                           }
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ymin > values[i - xsmin] then
+\end_layout
+
+\begin_layout Plain Layout
+
+      ymin := values[i - xsmin];
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ymax < values[i - xsmin] then
+\end_layout
+
+\begin_layout Plain Layout
+
+      ymax := values[i - xsmin];
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Наконец, масштаб по оси Y находим как прежде }
+\end_layout
+
+\begin_layout Plain Layout
+
+  my := (ysmax - ysmin) / (ymax - ymin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Находим начало координат ДСК }
+\end_layout
+
+\begin_layout Plain Layout
+
+  y0s := ysmin + my * ymax;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Находим координаты первой точки }  
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Заметим, что теперь мы не используем функцию, }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { а пользуемся лишь значениями из массива       }
+\end_layout
+
+\begin_layout Plain Layout
+
+  var xs, ys: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+  xs := toXs(xmin);
+\end_layout
+
+\begin_layout Plain Layout
+
+  ys := toYs(values[xs - xsmin]);
+\end_layout
+
+\begin_layout Plain Layout
+
+  MoveTo(xs, ys);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Строим весь оставшийся график }
+\end_layout
+
+\begin_layout Plain Layout
+
+  for xs := xsmin + 1 to xsmax do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    var yc := values[xs - xsmin];
+\end_layout
+
+\begin_layout Plain Layout
+
+    ys := toYs(yc);
+\end_layout
+
+\begin_layout Plain Layout
+
+    LineTo(xs, ys);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Результат работы такой программы более привлекателен: график функции будет
+ отмасштабирован таким образом, чтобы занимать всё вертикальное пространство
+ окна.
+ Пример работы программы показан на рисунке 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:autoscale"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/07_grapher2.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Пример работы программы с автоматическим масштабированием
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:autoscale"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Построение осей и проверка корректности
+\end_layout
+
+\begin_layout Standard
+Заметим, что отрезки осей в декартовой системе координат имеют координаты:
+ 
+\begin_inset Formula $\left(x_{c}^{min},0\right)$
+\end_inset
+
+ и 
+\begin_inset Formula $\left(x_{c}^{max},0\right)$
+\end_inset
+
+ для горизонтальной оси, 
+\begin_inset Formula $\left(0,y_{c}^{min}\right)$
+\end_inset
+
+ и 
+\begin_inset Formula $\left(0,y_{c}^{max}\right)$
+\end_inset
+
+ для вертикальной.
+ Построение осей заключается в проведении таких линий и проецировании их
+ в экранную систему координат.
+\end_layout
+
+\begin_layout Standard
+На концах осей следует построить стрелки направления.
+ Для вертикальной оси можно отступить от верхней точки оси на 15 пикселей
+ вниз и на 5 пикселей влево и вправо.
+ Для горизонтальной оси - от правой точки оси на 15 пикселей влево и на
+ 5 пикселей вверх и вниз.
+\end_layout
+
+\begin_layout Standard
+На оси также следует оставить 
+\begin_inset Quotes fld
+\end_inset
+
+масштабный штрих
+\begin_inset Quotes frd
+\end_inset
+
+ - штрих в точке, соответствующей координате 
+\begin_inset Formula $\left(1,0\right)$
+\end_inset
+
+ на горизонтальной оси и 
+\begin_inset Formula $\left(0,1\right)$
+\end_inset
+
+ на вертикальной.
+ Штрих должен отстоять от оси на 5 пикселей в обе стороны.
+\end_layout
+
+\begin_layout Standard
+Координатные оси следует изображать тонкими (с толщиной линии, равной 1
+ пикселю), в то время как сам график следует изображать более широкой линией
+ (толщина 2 пикселя).
+ Изменение толщины линии можно производить с помощью изменения свойства
+ 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Width
+\end_layout
+
+\end_inset
+
+ объекта 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Pen
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Pen.Width := 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Линии будут отображены с толщиной 1 }
+\end_layout
+
+\begin_layout Plain Layout
+
+Line(0, 0, 200, 200);
+\end_layout
+
+\begin_layout Plain Layout
+
+Line(250, 150, 50, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+Pen.Width := 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Линии будут отображены с толщиной 2 }
+\end_layout
+
+\begin_layout Plain Layout
+
+Line(0, 200, 200, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+Line(150, 250, 0, 50);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Пример работы программы при построении графика функции приведен на рисунке
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:grapher_final"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/graphics_pascal/08_grapher3.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Пример законченной программы
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:grapher_final"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Для самопроверки можно использовать построенные вручную или в математических
+ пакетах графики функций.
+\end_layout
+
+\begin_layout Section
+Задание
+\end_layout
+
+\begin_layout Standard
+Требуется доработать приведенную процедуру (или написать свою) для вывода
+ на экран осей и масштабных штрихов.
+ С её помощью построить графики функций:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+№
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Функция
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Границы
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y=x^{2}-3x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\in\left[-3,4\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y=\sin\left(x^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\in\left[-1,4\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y=x+\frac{1}{x}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\in\left[0.25,4\right],y\in\left[-1,3\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y=\int_{0}^{x}\frac{tdx}{2\sqrt{9-t^{2}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\in[0,2],y\in[-1,4]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+С помощью задания цвета пера (свойство 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Pen.Color
+\end_layout
+
+\end_inset
+
+) отобразить на одном графике две функции:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+№
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Функции
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Границы
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y_{1}=e^{-x^{2}},y_{2}=\int_{-100}^{x}e^{-t^{2}}dt$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\in\left[-3,3\right],y\in\left[-0.25,4\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y_{1}=\sin x,y_{2}=\int_{-2\pi}^{x}\sin tdt$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\in[-1,7],y\in[-1.5,1.5]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Задание цвета производится командами
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Pen.Color := clRed; { Цвет пера - красный }
+\end_layout
+
+\begin_layout Plain Layout
+
+Pen.Color := clBlue; { Цвет пера - синий }
+\end_layout
+
+\begin_layout Plain Layout
+
+Pen.Color := clBlack; { Цвет пера - чёрный }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
