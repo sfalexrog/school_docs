@@ -1,0 +1,1327 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Part*
+Численное решение обыкновенных дифференциальных уравнений первого порядка
+\end_layout
+
+\begin_layout Section
+Теоретическая часть
+\end_layout
+
+\begin_layout Subsection
+Основные понятия
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Обыкновенные дифференциальные уравнения 
+\series default
+- уравнения вида 
+\begin_inset Formula 
+\begin{equation}
+F(x,y,y',y''\ldots,y^{(n)})=0
+\end{equation}
+
+\end_inset
+
+, где 
+\begin_inset Formula $y=y(x)$
+\end_inset
+
+ - неизвестная функция.
+ 
+\series bold
+Порядком
+\series default
+ такого уравнения называют порядок старшей производной 
+\begin_inset Formula $n$
+\end_inset
+
+, входящей в уравнение.
+ 
+\series bold
+Решением
+\series default
+ такого уравнения будем называть функцию 
+\begin_inset Formula $y(x)$
+\end_inset
+
+, 
+\begin_inset Formula $n$
+\end_inset
+
+ раз дифференцируемую и удовлетворяющую исходному уравнению во всех точках
+ своей области опеделения.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Задачей Коши
+\series default
+ называют задачу о нахождении решения дифференциального уравнения, удовлетворяющ
+его 
+\series bold
+начальным условиям
+\series default
+ вида 
+\begin_inset Formula $y(x_{0})=y_{0},y'(x_{0})=y_{0}^{(1)},y''(x_{0})=y_{0}^{(2)},\ldots,y_{0}^{(n-1)}=y_{0}^{(n-1)}$
+\end_inset
+
+, где 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ - фиксированная точка, а 
+\begin_inset Formula $y_{0},y_{0}^{(1)},\ldots y_{0}^{(n-1)}$
+\end_inset
+
+ - численные значения функции и её производных от первой до 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-й включительно в данной точке.
+\end_layout
+
+\begin_layout Standard
+Будем рассматривать уравнения вида
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y'=f(x,y)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Задача Коши для данного уравнения состоит в отыскании решения, удовлетворяющего
+ условию 
+\begin_inset Formula $y(x_{0})=y_{0}$
+\end_inset
+
+.
+ Задача численного решения такого уравнения в таком случае сводится к отысканию
+ значений функции 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ в некотором множестве точек на заданном отрезке 
+\begin_inset Formula $\left[a,b\right]$
+\end_inset
+
+, причём, как правило, одна из границ этого отрезка совпадает с точкой 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Метод Эйлера
+\end_layout
+
+\begin_layout Standard
+Выберем на отрезке 
+\begin_inset Formula $\left[a,b\right]$
+\end_inset
+
+ точки 
+\begin_inset Formula $\left\{ x_{0},\ldots x_{n}\right\} $
+\end_inset
+
+ , расположенные на одинаковом расстоянии 
+\begin_inset Formula $h=\frac{b-a}{n}$
+\end_inset
+
+ друг от друга (здесь и далее предполагается, что начальная точка 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ совпадает с левой границей рассматриваемого отрезка).
+ При этом 
+\begin_inset Formula $x_{i}=x_{0}+i\cdot h$
+\end_inset
+
+ для 
+\begin_inset Formula $i=0,1,\ldots,n$
+\end_inset
+
+.
+ Будем находить приближенные значения 
+\begin_inset Formula $y_{i}=y(x_{i})$
+\end_inset
+
+ в этих точках.
+\end_layout
+
+\begin_layout Standard
+По определению, производная функции записывается как
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f'(x)=\lim_{\Delta x\rightarrow0}\frac{f(x+\Delta x)-f(x)}{\Delta x}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Иначе это соотношение можно записать, исходя из свойств дифференциала:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f'(x)=\frac{f(x+\Delta x)-f(x)}{\Delta x}+O(\Delta x)\label{eq:4}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+где 
+\begin_inset Formula $O(\Delta x)$
+\end_inset
+
+ - величина погрешности нашего вычисления 
+\begin_inset Formula $f'(x)$
+\end_inset
+
+, зависящая от выбора приращения 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Используя введённые для нашего дифференциального уравнения обозначения,
+ перепишем зависимость 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:4"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y'(x_{0})=\frac{y(x_{0}+h)-y(x_{0})}{h}+O(h)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Тогда
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y(x_{1})=y(x_{0}+h)=y(x_{0})+h\cdot y'(x_{0})+O(h^{2})=y(x_{0})+h\cdot f(x_{0},y_{0})+O(h^{2})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Поскольку значение 
+\begin_inset Formula $O(h^{2})$
+\end_inset
+
+ нам неизвестно (известно только, что оно зависит от 
+\begin_inset Formula $h$
+\end_inset
+
+ квадратично, то есть уменьшается в 4 раза при уменьшении 
+\begin_inset Formula $h$
+\end_inset
+
+ в два раза), определим приближенное значение функции 
+\begin_inset Formula $y$
+\end_inset
+
+ в точке 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+y(x_{1})\approx y(x_{0})+h\cdot f(x_{0},y_{0})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Для дальнейших подсчётов придётся использовать приближенное значение функции.
+ Обозначим приближенное (вычисленное нами) значение функции в точке 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ как 
+\begin_inset Formula $\bar{y}_{i}$
+\end_inset
+
+.
+ Тогда расчётная формула примет следующий вид:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\bar{y}_{i+1}=\bar{y}_{i}+h\cdot f(x_{i},\bar{y}_{i}),\;i=1,\ldots,n
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Такой способ нахождения значений искомой функции называется 
+\emph on
+методом Эйлера
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Заметим, что первое вычисленное значение имеет погрешность 
+\begin_inset Formula $O(h^{2})$
+\end_inset
+
+, однако вычисление последующих значений основывается на уже неточной величине
+ 
+\begin_inset Formula $y_{1}$
+\end_inset
+
+, что делает общую погрешность метода в точке 
+\begin_inset Formula $b$
+\end_inset
+
+ порядка 
+\begin_inset Formula $O(h)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename pictures/ode_euler/euler_divergence.png
+	scale 20
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Иллюстрация накопления погрешности при использовании метода Эйлера
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:error-accumulation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Пример того, как происходит накопление погрешности, приведен на рисунке
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:error-accumulation"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Практические рекомендации
+\end_layout
+
+\begin_layout Subsection
+Передача функции как параметра
+\end_layout
+
+\begin_layout Standard
+При разработке программного обеспечения часто возникает необходимость использова
+ть тот или иной алгоритм (например, вычисления интеграла или решения уравнения)
+ к различным функциям.
+ Было бы нерационально для каждой интегрируемой функции записывать свою
+ функцию для вычисления интеграла, особенно если окажется, что функцию вычислени
+я интеграла надо заменить или исправить.
+\end_layout
+
+\begin_layout Standard
+В языке программирования PascalABC.Net существует возможность передавать
+ функции как параметры для других функций.
+ В этом случае при вызове вычисляющей функции (например, функции, вычисляющей
+ интеграл) в качестве одного из параметров передаётся имя вычисляемой функции
+ (той функции, от которой берётся интеграл), и далее вычисляющая функция
+ может вызывать вычисляемую, используя то имя, которое указано в списке
+ формальных параметров.
+\end_layout
+
+\begin_layout Standard
+Приведём пример использования данной возможности:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily},tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Процедура табулирования функции.
+               }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Производит вывод на экран значений функции на  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ отрезке от a до b, выводя на экран n значений.
+ }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ В качестве параметров принимает a, b - границы }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ отрезка, n - количество значений, f - функция, }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ для которой надо построить таблицу значений.
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure tabulate(a, b: Real; n: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+				   f: function(t: Real):Real);
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+	var h = (b - a) / (n - 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+	for var i := 0 to n - 1 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+		var x := a + i * h;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Используется форматированный вывод: для каждого }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ числа резервируется 7 десятичных позиций, и для }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ каждого числа выводится 3 знака после запятой   }
+\end_layout
+
+\begin_layout Plain Layout
+
+		writeln(x:7:3, '|', f(x):7:3);
+\end_layout
+
+\begin_layout Plain Layout
+
+	end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+function f1(x: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+	result := x * x;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+function f2(x: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+	result := 2 - x;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Вызов подпограммы табулирования с двумя различными }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ функциями.
+                                         }
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+	tabulate(0, 10, 10, f1);
+\end_layout
+
+\begin_layout Plain Layout
+
+	tabulate(-10, 10, 21, f2);
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Обратим внимание на то, что, хотя в программе нет функции 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f(x)
+\end_layout
+
+\end_inset
+
+, она всё равно работает и работает верно - сначала выводится результат
+ табулирования для 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f1
+\end_layout
+
+\end_inset
+
+, затем для 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f2
+\end_layout
+
+\end_inset
+
+.
+ Это происходит потому, что в процедуре 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+tabulate
+\end_layout
+
+\end_inset
+
+ мы создали формальный параметр 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f
+\end_layout
+
+\end_inset
+
+, который имеет тип функции; конкретно - 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+function(t: Real):Real
+\end_layout
+
+\end_inset
+
+ - то есть функции, которая принимает один параметр типа 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Real
+\end_layout
+
+\end_inset
+
+ и возвращает значение типа 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Real
+\end_layout
+
+\end_inset
+
+.
+ Далее, при вызове процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+tabulate
+\end_layout
+
+\end_inset
+
+ мы передаём ей как границы отрезка, так и имя той функции, которую надо
+ табулировать.
+ При работе программы в первом случае при вызове функции 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f
+\end_layout
+
+\end_inset
+
+ реально будет вызвана функция 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f1
+\end_layout
+
+\end_inset
+
+, во втором - функция 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+f2
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Следует обратить внимание, что имя переменной, передаваемой в функцию-параметр,
+ может отличаться от имени, указанного в 
+\begin_inset Quotes fld
+\end_inset
+
+настоящей
+\begin_inset Quotes frd
+\end_inset
+
+, передаваемой функции (в примере происходит именно это).
+ Важно лишь совпадение типов передаваемых переменных, их количество и порядок,
+ в котором они указываются, а также тип возвращаемого значения функции.
+\end_layout
+
+\begin_layout Subsection
+Подсчёт количества вызовов функции
+\end_layout
+
+\begin_layout Standard
+Методы вычисления приближенных значений решения дифференциального уравнения
+ следует сравнивать по зависимости погрешности от шага разбиения и по вычислител
+ьной сложности.
+ Вычислительную сложность можно оценить с помощью замеров количества вызовов
+ функции 
+\begin_inset Formula $f(x,y)$
+\end_inset
+
+ в зависимости от шага разбиения.
+ Эти замеры можно производить с помощью глобальной переменной, величина
+ которой будет увеличиваться на 1 при каждом вызове функции.
+ Пример реализации этой идеи показан ниже:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Здесь будет храниться количество вызовов }
+\end_layout
+
+\begin_layout Plain Layout
+
+var CallCount: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+function f(x,y: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Первым делом увеличиваем счётчик вызовов }
+\end_layout
+
+\begin_layout Plain Layout
+
+	CallCount := CallCount + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	result := x * x + y * y;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Данная процедура будет вычислять значения}
+\end_layout
+
+\begin_layout Plain Layout
+
+{ частного решения ОДУ на отрезке от a до b}
+\end_layout
+
+\begin_layout Plain Layout
+
+{ для n точек на этом отрезке              }
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure odeEuler(a, b: Real; n: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+                   f: function(x, y: Real): Real
+\end_layout
+
+\begin_layout Plain Layout
+
+                   y0: Real);
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+{ ------------------------------------------ }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Здесь должна быть реализация метода Эйлера }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ ------------------------------------------ }
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Первым делом обнуляем счётчик              }
+\end_layout
+
+\begin_layout Plain Layout
+
+	CallCount := 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Вычисляем значения частного решения для    }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ 1000 точек                                 }
+\end_layout
+
+\begin_layout Plain Layout
+
+	odeEuler(0, 10, 1000, f, 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+	writeln('Функция f(x, y) была вычислена ',
+\end_layout
+
+\begin_layout Plain Layout
+
+             CallCount, 'раз');
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Проверка корректности
+\end_layout
+
+\begin_layout Standard
+Заметим, что при 
+\begin_inset Formula $f(x,y)=g(x)$
+\end_inset
+
+ дифференциальное уравнение принимает вид 
+\begin_inset Formula $y'=g(x)$
+\end_inset
+
+.
+ Очевидно, решением такого уравнения будет 
+\begin_inset Formula $y=G(x)=\int g(x)dx$
+\end_inset
+
+.
+ В случае постановки задачи Коши получаем: 
+\begin_inset Formula 
+\[
+y=\int_{x_{0}}^{x}g(t)dt+y_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Очевидно, метод Эйлера, примененный к такому уравнению, будет выдавать те
+ же значения, что и метод левых прямоугольников при интегрировании функции
+ с заданным шагом.
+ Следовательно, один из способов проверки своей программы - для уравнения
+ вида 
+\begin_inset Formula $y'=g(x)$
+\end_inset
+
+ сравнить результаты вычисления по методу Эйлера и прямым интегрированием.
+\end_layout
+
+\begin_layout Standard
+Другой, ещё более правильный, но более трудоёмкий способ - найти аналитическое
+ решение какого-либо уравнения и сравнить значения полученной функции со
+ значениями, выдаваемыми программой.
+ При этом следует учесть, что некоторые расхождения всё равно будут появляться
+ - важно, чтобы общая картина решения соответствовала истине.
+\end_layout
+
+\begin_layout Standard
+Для примера можно взять уравнение 
+\begin_inset Formula $y'=y/x$
+\end_inset
+
+; это уравнение с разделяющимися переменными, его решение тривиально:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{dy}{y}=\frac{dx}{x},\ln y=\ln x+C,y=C_{1}x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Возьмём для этого уравнения условие 
+\begin_inset Formula $y(1)=1$
+\end_inset
+
+: тогда частным решением (решением задачи Коши) этого уравнения будет функция
+ 
+\begin_inset Formula $y=x$
+\end_inset
+
+.
+ При использовании данного уравнения и такого начального условия программа
+ должна выдавать, в целом, схожие значения для 
+\begin_inset Formula $x$
+\end_inset
+
+ и 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Задание
+\end_layout
+
+\begin_layout Standard
+Требуется написать программу, которая будет получать на вход номер уравнения,
+ начало и конец отрезка, количество точек на отрезке и начальное значение
+ функции.
+ Программа должна выводить на печать координаты точек, в которых происходит
+ вычисление решения, и значения решения в этих точках.
+\end_layout
+
+\begin_layout Standard
+Уравнения заданы в таблице:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+№
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Уравнение
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=x^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=y^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=xy$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=y-x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=sin(x)+y$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=\frac{x^{2}-3x+9}{y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+В программе должна присутствовать функция 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+odeSolve
+\end_layout
+
+\end_inset
+
+, принимающая в качестве параметров координаты начала и конца отрезка, на
+ котором производится вычисление решения, количество точек для вычисления,
+ функцию, находящуюся в правой части, а также начальное значение решения.
+ Допускается написание функций для уравнений, не входящих в список.
+\end_layout
+
+\end_body
+\end_document
