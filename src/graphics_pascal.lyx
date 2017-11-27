@@ -3719,7 +3719,7 @@ name "fig:grapher_final"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $y=\int_{0}^{x}\frac{tdx}{2\sqrt{9-t^{2}}}$
+\begin_inset Formula $y=\int_{0}^{x}\frac{tdt}{2\sqrt{9-t^{2}}}$
 \end_inset
 
 
