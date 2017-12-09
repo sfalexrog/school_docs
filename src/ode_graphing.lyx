@@ -1,0 +1,1168 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 1.8cm
+\rightmargin 2cm
+\bottommargin 1.8cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Part*
+Построение графиков дифференциальных уравнений
+\end_layout
+
+\begin_layout Section
+Практические рекомендации
+\end_layout
+
+\begin_layout Subsection
+Ссылочные параметры
+\end_layout
+
+\begin_layout Standard
+В ряде случаев при написании программы возникает потребность изменить значение
+ одного из параметров вызываемой процедуры или функции так, чтобы это изменение
+ было 
+\begin_inset Quotes fld
+\end_inset
+
+видно
+\begin_inset Quotes frd
+\end_inset
+
+ в точке вызова этой процедуры или функции.
+ Такая потребность может возникать при необходимости вернуть более одного
+ значения из функции, при ограничениях на память и быстродействие, не позволяющи
+х создавать новые объекты, а также при взаимодействии с операционной системой
+ и сторонними библиотеками.
+ В языке программирования Pascal для реализации такого поведения существуют
+ 
+\series bold
+ссылочные параметры
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Ссылочные параметры - параметры процедуры или функции, которые передаются
+ 
+\emph on
+по ссылке
+\emph default
+.
+ При таком механизме передачи в памяти 
+\series bold
+не выделяется
+\series default
+ место для хранения новой переменной; вместо этого для уже существующей
+ памяти создаётся новое 
+\series bold
+имя
+\series default
+.
+ Любые изменения, которые будут происходить с 
+\begin_inset Quotes fld
+\end_inset
+
+новой
+\begin_inset Quotes frd
+\end_inset
+
+ переменной, будут также отражаться и в 
+\begin_inset Quotes fld
+\end_inset
+
+старой
+\begin_inset Quotes frd
+\end_inset
+
+ - поскольку они будут использовать одну и ту же память.
+\end_layout
+
+\begin_layout Standard
+В языке Pascal ссылочная переменная отмечается в списке параметров функции
+ с помощью ключевого слова 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\end_inset
+
+, предшествующего её имени.
+\end_layout
+
+\begin_layout Standard
+Приведём пример работы такой программы:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Пример процедуры, получающей параметр по ссылке }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Параметр a - ссылочный, b - "обычный", то есть  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ будет передан "по значению".
+ Изменения, произо- }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ шедшие с переменной a, отразятся на той перемен-}
+\end_layout
+
+\begin_layout Plain Layout
+
+{ ной, которая была на первом месте при вызове    }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ процедуры.
+                                      }
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure byReference(var a: Integer; b: Integer);
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  a := a + b;
+\end_layout
+
+\begin_layout Plain Layout
+
+  b := a;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Для демонстрации работы программы выведем на экран  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ значения переменных, которые будем передавать в     }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ указанную процедуру.
+                                }
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  var x := 10;
+\end_layout
+
+\begin_layout Plain Layout
+
+  var y := 20;
+\end_layout
+
+\begin_layout Plain Layout
+
+  writeln(x, ' ', y);  { Выведет на печать: "10 20" }
+\end_layout
+
+\begin_layout Plain Layout
+
+  byReference(x, y);
+\end_layout
+
+\begin_layout Plain Layout
+
+  writeln(x, ' ', y);  { Выведет на печать: "30 20" }
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+При вызове процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+byReference
+\end_layout
+
+\end_inset
+
+ первый параметр будет передан по ссылке, второй - по значению (то есть
+ для переменной 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+b
+\end_layout
+
+\end_inset
+
+ будет выделена новая память, куда будет записано значение переменной 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+y
+\end_layout
+
+\end_inset
+
+ из основной программы).
+ Поскольку переменные 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+a
+\end_layout
+
+\end_inset
+
+ процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+byReference
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x
+\end_layout
+
+\end_inset
+
+ основной программы используют одну и ту же память, все изменения, происходящие
+ с переменной 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+a
+\end_layout
+
+\end_inset
+
+, перейдут в переменную 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x
+\end_layout
+
+\end_inset
+
+; в свою очередь, переменные 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+b
+\end_layout
+
+\end_inset
+
+ процедуры 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+byReference
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+y
+\end_layout
+
+\end_inset
+
+ основной программы будут использовать различную память и смогут изменяться
+ независимо.
+\end_layout
+
+\begin_layout Standard
+Аналогичным образом по ссылке можно передавать и массивы
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Строго говоря, в 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+ массивы 
+\series bold
+всегда
+\series default
+ передаются по ссылке; ключевое слово 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\end_inset
+
+ следует указывать, если результат работы процедуры или функции будет записан
+ в этот массив - это подсказка для программиста.
+ Аналогично, если массив передаётся без ключевого слова 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+var
+\end_layout
+
+\end_inset
+
+, то изменять его содержимое 
+\series bold
+недопустимо
+\series default
+.
+\end_layout
+
+\end_inset
+
+.
+ При этом передаваемые массивы могут быть не инициализированными (в случае
+ с динамическими массивами), и память для них можно будет выделить прямо
+ в вызванной функции.
+ Приведём пример процедуры, производящей табулирование функции и записывающей
+ результаты в два массива: один - для аргументов функции, другой - для соответст
+вующих значений:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ Процедура табулирования функции           }
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Параметры:                                }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  a - левая граница отрезка табулирования  }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  b - правая граница отрезка табулирования }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  n - количество точек на отрезке          }
+\end_layout
+
+\begin_layout Plain Layout
+
+{      табулирования                        }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  f - функция одной переменной, для которой}
+\end_layout
+
+\begin_layout Plain Layout
+
+{      строится таблица значений            }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  x - массив, содержащий значения аргумента}
+\end_layout
+
+\begin_layout Plain Layout
+
+{  y - массов, содержащий значения функции  }
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure tabulateRef(a, b: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+                      n: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+                      f: Function(x: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+                      var x: array of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+                      var y: array of Real);
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Высчитываем шаг табулирования }
+\end_layout
+
+\begin_layout Plain Layout
+
+  var h := (b - a) / (n - 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Подготавливаем массивы x, y   }
+\end_layout
+
+\begin_layout Plain Layout
+
+  SetLength(x, n);   SetLength(y, n);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Производим непосредственно табулирование }
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := 0 to n - 1 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    x[i] := a + i * h;
+\end_layout
+
+\begin_layout Plain Layout
+
+    y[i] := f(x[i]);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end;                      
+\end_layout
+
+\begin_layout Plain Layout
+
+{ Пример использования описанной процедуры }
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Массивы для хранения значений табулирования }
+\end_layout
+
+\begin_layout Plain Layout
+
+  var xf: array of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  var yf: array of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Табулирование функции sin(x)                }
+\end_layout
+
+\begin_layout Plain Layout
+
+  tabulateRef(0, pi/2, 10, sin, xf, yf);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Вывод результатов на печать.
+ Поскольку      }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { размеры массивов xf и yf совпадают, можно   }
+\end_layout
+
+\begin_layout Plain Layout
+
+  { использовать размер любого из них в качестве} 
+\end_layout
+
+\begin_layout Plain Layout
+
+  { пределов цикла                              }
+\end_layout
+
+\begin_layout Plain Layout
+
+  for var i := 0 to xf.Length - 1 do begin
+\end_layout
+
+\begin_layout Plain Layout
+
+    writeln(xf[i]:7:3, yf[i]:7:3);
+\end_layout
+
+\begin_layout Plain Layout
+
+  end;
+\end_layout
+
+\begin_layout Plain Layout
+
+end.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+В приведенном выше коде для массивов 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+xf
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+yf
+\end_layout
+
+\end_inset
+
+ основной программы память выделяется только в процедуре 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+tabulateRef
+\end_layout
+
+\end_inset
+
+.
+ При этом все изменения, произошедшие с массивами 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+y
+\end_layout
+
+\end_inset
+
+, также происходят с массивами 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+xf
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+yf
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Следует отметить, что использовать данную особенность языка следует весьма
+ ограниченно.
+ Процедуры и функции, передающие данные через ссылочные переменные, неочевидны
+ в использовании и требуют дополнительного, обширного документирования.
+ Часто наличие большого количества таких процедур и функций свидетельствует
+ о недостаточной проработке архитектуры программы.
+ В современном 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+PascalABC.Net
+\end_layout
+
+\end_inset
+
+ функции, возвращающие составные типы, предпочтительнее процедур, изменяющих
+ значения массивов.
+\end_layout
+
+\begin_layout Section
+Задание
+\end_layout
+
+\begin_layout Standard
+В качестве примера работы со ссылочными переменными предлагается написать
+ программу, строящую графики решений дифференциальных уравнений.
+ В качестве метода решения дифференциального уравнения следует использовать
+ метод Эйлера.
+\end_layout
+
+\begin_layout Standard
+Программа должна содержать процедуру 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+odeEuler
+\end_layout
+
+\end_inset
+
+, принимающую в качестве параметров координаты начала и конца отрезка, на
+ котором производится вычисление решения, количество точек для вычисления,
+ функцию, по которой вычисляется значение производной, начальное решение,
+ а также два массива для записи точек решения: по оси 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+oX
+\end_layout
+
+\end_inset
+
+ и по оси 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+oY
+\end_layout
+
+\end_inset
+
+.
+ Заголовок процедуры должен выглядеть так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Pascal,numbers=left,basicstyle={\rmfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+procedure odeEuler(a, b: Real; n: Integer;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  f: Function(x, y: Real): Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  y0: Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  var x: array of Real;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  var y: array of Real);
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\end_layout
+
+\begin_layout Plain Layout
+
+  SetLength(x, n);
+\end_layout
+
+\begin_layout Plain Layout
+
+  SetLength(y, n);
+\end_layout
+
+\begin_layout Plain Layout
+
+  { Далее - реализация метода Эйлера }
+\end_layout
+
+\begin_layout Plain Layout
+
+end;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Помимо этого, в программе должна присутствовать процедура 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+plotArrays
+\end_layout
+
+\end_inset
+
+, на вход которой передаются два массива координат (по горизонтальной и
+ вертикальной оси), и которая строит линию по значениям из этих массивов,
+ автоматически подбирая параметры масштаба.
+\end_layout
+
+\begin_layout Standard
+В основной программе должен происходить последовательный вызов процедуры
+ 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+odeEuler
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+plotArrays
+\end_layout
+
+\end_inset
+
+.
+ Перед вызовом этих процедур следует запросить у пользователя параметры
+ решения (координаты отрезка, начальное значение).
+\end_layout
+
+\begin_layout Standard
+Уравнения использованы те же, что и в задаче по решению дифференциальных
+ уравнений:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+№
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Уравнение
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=x^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=y^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=xy$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=y-x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=sin(x)+y$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y'=\frac{x^{2}-3x+9}{y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
