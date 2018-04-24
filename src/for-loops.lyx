@@ -1,0 +1,1681 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Part*
+Цикл перечисления в C++
+\end_layout
+
+\begin_layout Section
+Синтаксис, назначение
+\end_layout
+
+\begin_layout Standard
+При разработке алгоритмов часто возникает необходимость выполнить некоторое
+ действие заданное количество раз.
+ Кроме того, зачастую требуется не просто повторить какое-то действие, а,
+ например, перебрать все элементы в каком-то множестве (представленном,
+ как правило, каким-либо контейнером - о них поговорим позже).
+ Необходимость эта встречается настолько часто, что циклы, используемые
+ для таких целей, стали выделять в отдельный класс: 
+\series bold
+циклы перечисления
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Строго говоря, всё, что реализуется с помощью циклов перечисления, можно
+ реализовать и условным циклом; однако использование цикла перечисления
+ более ясно показывает намерение программиста: 
+\series bold
+выполнить действие заданное количество раз/для каждого элемента
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Синтаксически цикл реализуется с помощью ключевого слова 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+for
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset listings
+lstparams "language={C++}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for([<инициализация>];[<условие>];[<шаг цикла>]) <выражение>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Заметьте, что слова 
+\emph on
+инициализация, шаг цикла, выражение
+\emph default
+ взяты в квадратные скобки.
+ Это означает, что при написании кода эти части можно опустить; самый простой
+ цикл перечисления будет выглядеть так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for(;;) {/* ...дальнейший код...
+ */}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Такой цикл будет выполняться бесконечно (или пока его не прервёт какой-то
+ код внутри тела цикла, но об этом позже).
+ Тем не менее, чаще встречается иное написание:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for(int i = 0; i < 10; ++i) { /* тело цикла */ }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Здесь 
+\emph on
+инициализация
+\emph default
+ - это код 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+int i = 0
+\end_layout
+
+\end_inset
+
+, 
+\emph on
+условие - 
+\emph default
+
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+i < 10
+\end_layout
+
+\end_inset
+
+, 
+\emph on
+шаг цикла - 
+\emph default
+
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+++i
+\end_layout
+
+\end_inset
+
+.
+ Рассмотрим подробнее каждое из этих понятий и укажем, что делает тот код,
+ который представлен в качестве примера:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Инициализация
+\emph default
+ - код, который будет выполнен 
+\series bold
+перед началом цикла
+\series default
+ (перед запуском тела цикла первый раз).
+ Как правило, здесь объявляют переменную, которую будут называть 
+\series bold
+переменной цикла
+\series default
+.
+ В отличие от некоторых других языков (например, 
+\series bold
+Pascal
+\series default
+ или 
+\series bold
+Basic
+\series default
+), в 
+\series bold
+C++
+\series default
+ переменная цикла вполне может и не быть целочисленной; больше того, вполне
+ допускается объявить сразу несколько переменных.
+ Стоит учитывать, что переменная, объявленная в секции инициализации, 
+\series bold
+существует только внутри цикла
+\series default
+; так, следующий код вызовет ошибку компиляции:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int s = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 0; i < 15; ++i) {s = s + i;}
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cout << s; /* Всё в порядке: s объявлена вне цикла */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cout << i; /* Ошибка: переменная i не объявлена в данной области видимости
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Условие
+\emph default
+ - код, который будет выполняться 
+\emph on
+перед
+\emph default
+ каждым запуском цикла.
+ Данный код должен быть некоторым логическим или арифметическим выражением;
+ если значение данного выражения равно нулю, то запуск цикла не происходит
+ и управление переходит на код, написанный после него.
+ Иначе тело цикла запускается; строго говоря, в языке 
+\series bold
+C/C++ цикл перечисления по сути является циклом с предусловием
+\series default
+ с более богатым синтаксисом.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Шаг цикла
+\emph default
+ - код, который выполняется 
+\series bold
+после каждого выполнения тела цикла
+\series default
+ (то есть 
+\series bold
+перед первым выполнением 
+\series default
+этот код 
+\series bold
+не
+\series default
+ выполняется).
+ Разумно в этом месте увеличивать переменную цикла; код 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+++i
+\end_layout
+
+\end_inset
+
+ означает 
+\begin_inset Quotes fld
+\end_inset
+
+префиксный инкремент
+\begin_inset Quotes frd
+\end_inset
+
+ - это увеличивает значение переменной на 1.
+ (С тем же успехом можно было бы писать 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+i++
+\end_layout
+
+\end_inset
+
+ - в данном месте это 
+\emph on
+почти
+\emph default
+ то же самое).
+ Впрочем, ничего не мешает написать, например, 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+i = i + 2
+\end_layout
+
+\end_inset
+
+ или даже что-то более сложное; например, при использовании связных списков
+ (структур данных, в которых каждый элемент содержит указатель на следующий)
+ цикл перечисления выглядел бы примерно так:
+\begin_inset listings
+lstparams "language={C++},breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for(node *cur = head; cur != nullptr; cur = cur->next) {/* ...дальнейший код...
+ */}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(более подробно такой код будет рассмотрен при рассмотрении связных списков)
+\end_layout
+
+\begin_layout Standard
+Стоит отметить, что цикл перечисления не налагает никаких ограничений на
+ изменение переменной цикла внутри этого самого цикла; однако 
+\series bold
+так лучше не делать
+\series default
+, потому что это сильно затрудняет понимание кода.
+ Если разрабатываемый вами алгоритм требует изменения условной переменной
+ в нескольких местах цикла, то, возможно, лучше присмотреться к условному
+ циклу?
+\end_layout
+
+\begin_layout Standard
+К слову, в 
+\series bold
+C++11
+\series default
+ появился альтернативный синтаксис для цикла перечисления; новый синтаксис
+ куда больше раскрывает суть цикла как цикла 
+\series bold
+перечисления
+\series default
+ (а не просто удобного условного цикла) и используется для обхода коллекций.
+ Рассматривать его сейчас мы, конечно же, не будем - отложим это до появления
+ массивов.
+\end_layout
+
+\begin_layout Section
+Элементарные алгоритмы
+\end_layout
+
+\begin_layout Standard
+(альтернативное название: 
+\begin_inset Quotes fld
+\end_inset
+
+Это должен знать каждый школьник
+\begin_inset Quotes frd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Subsection
+Сумма и среднее арифметическое последовательности
+\end_layout
+
+\begin_layout Standard
+Здесь и далее будем предполагать, что длина последовательности нам задаётся
+ с клавиатуры перед самой последовательностью.
+\end_layout
+
+\begin_layout Standard
+Для вычисления суммы последовательности следует в цикле считывать очередной
+ элемент последовательности и прибавлять его к уже имеющейся сумме.
+ Для вычисления среднего арифметического следует эту сумму разделить на
+ количество элементов, при этом не забывая привести хотя бы что-то из этого
+ к вещественному типу:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int sum = 0; /* Накопленная сумма */
+\end_layout
+
+\begin_layout Plain Layout
+
+	int n;       /* Длина последовательности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> n;
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 0; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a; /* Считываем элемент...
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+		sum = sum + a; /* ...и добавляем его к сумме */
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cout << "sum: " << sum << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* При вычислении среднего обязательно делаем хотя бы делимое вещественного
+ типа */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cout << "mean: " << (double)sum / (double)n << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Минимум и максимум
+\end_layout
+
+\begin_layout Standard
+Если надо найти наименьший/наибольший элемент последовательности (без дополнител
+ьных условий, вроде 
+\begin_inset Quotes fld
+\end_inset
+
+наибольший чётный
+\begin_inset Quotes frd
+\end_inset
+
+ или 
+\begin_inset Quotes fld
+\end_inset
+
+наименьший положительный
+\begin_inset Quotes frd
+\end_inset
+
+), то просто принимаем первый элемент последовательности за минимум/максимум
+ и каждый следующий сравниваем с ним:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int n;       /* Длина последовательности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> n;
+\end_layout
+
+\begin_layout Plain Layout
+
+    int min, max;
+\end_layout
+
+\begin_layout Plain Layout
+
+    int t;       /* Переменная, в которую мы считаем первый элемент последовател
+ьности */
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::cin >> t;
+\end_layout
+
+\begin_layout Plain Layout
+
+	min = max = t; /* Предполагаем, что первый элемент - и минимум, и максимум
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Мы уже считали первый элемент, поэтому отсчитываем с единицы */
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 1; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a;
+\end_layout
+
+\begin_layout Plain Layout
+
+        /* Сравниваем каждый новый элемент с текущим минимумом/максимумом
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (a > max) max = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (a < min) min = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cout << "min: " << min << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cout << "max: " << max << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Если же у нас есть какие-то условия, которым должен соответствовать минимум
+ или максимум, то можно воспользоваться так называемым 
+\series bold
+значением-меткой
+\series default
+ (sentinel value) - таким значением, которое 
+\series bold
+не
+\series default
+ соответствует условию, и показывает, что данный минимум/максимум не существует
+ (например, нет чисел, удовлетворяющих какому-то условию, по которому ищется
+ экстремальное значение).
+ Так, к примеру, если бы нам надо было найти наибольшее чётное число, мы
+ бы могли написать так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int n;       /* Длина последовательности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> n;
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Значение-метка: -1 является нечётным числом, если максимум после
+ работы цикла остался равен этому значению, значит, чётных чисел не было
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+	int max = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 0; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a;
+\end_layout
+
+\begin_layout Plain Layout
+
+        /* Условие: если число a является чётным и:
+\end_layout
+
+\begin_layout Plain Layout
+
+           - либо a больше текущего максимума
+\end_layout
+
+\begin_layout Plain Layout
+
+           - либо максимум равен значению-метке */
+\end_layout
+
+\begin_layout Plain Layout
+
+        if ((a % 2 == 0) && ((a > max) || (max == -1)) max = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Проверяем, нашли ли мы хотя бы одно чётное число */
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (max != -1)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "max even: " << max << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	else
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "no even numbers" << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Наконец, если мы по каким-то причинам не можем использовать значения-метки,
+ но у нас есть 
+\series bold
+диапазон
+\series default
+ входных значений (то есть сказано, что все элементы, например, по модулю
+ не превосходят 10000), то мы можем установить начальные значения минимума
+ и максимума за пределами этого диапазона.
+ 
+\series bold
+Важно
+\series default
+: максимум должен быть 
+\series bold
+меньше меньшего
+\series default
+, минимум - 
+\series bold
+больше большего
+\series default
+ (поскольку значение минимума может только уменьшаться, а максимума - только
+ увеличиваться).
+\end_layout
+
+\begin_layout Standard
+Пример нахождения нечётного минимума, если все числа не превосходят 5000:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int n;       /* Длина последовательности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> n;
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Минимум - больше большего: наибольшее значение 5000, поэтому здесь
+ поставим 5001 */
+\end_layout
+
+\begin_layout Plain Layout
+
+	int min = 5001;
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 0; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a;
+\end_layout
+
+\begin_layout Plain Layout
+
+        /* Заметим, что min меняется тогда и только тогда, когда очередное
+ число меньше, чем min, то есть min может только уменьшаться */
+\end_layout
+
+\begin_layout Plain Layout
+
+        if ((a % 2 != 0) && (a < min)) min = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Строго говоря, 5001 можно трактовать как значение-метку - или просто
+ проверить, не выходит ли наш минимум за допустимый диапазон */
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (min <= 5000)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "min odd: " << min << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	else
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "no odd numbers" << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Порядковый номер минимума/максимума
+\end_layout
+
+\begin_layout Standard
+Идея абсолютно такая же, как и в случае с поиском минимума/максимума...
+ правда, значения, равные минимуму или максимуму могут встречаться несколько
+ раз.
+ Поэтому в задании должно быть уточнение: надо ли найти положение первого
+ или последнего минимума/максимума.
+ В первом случае мы проверяем, меньше ли/больше ли текущий элемент, чем
+ наш минимум/максимум, и если условие выполняется - записываем порядковый
+ номер считанного элемента.
+ Во втором - строгую проверку (меньше/больше) надо заменить на 
+\series bold
+нестрогую 
+\series default
+(не больше/не меньше).
+\end_layout
+
+\begin_layout Standard
+Продемонстрируем это на примере: пусть надо определить первое и последнее
+ вхождения максимума в последовательность:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int n;       /* Длина последовательности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> n;
+\end_layout
+
+\begin_layout Plain Layout
+
+	int max;
+\end_layout
+
+\begin_layout Plain Layout
+
+	int imaxFirst;    /* Порядковый номер первого максимума */
+\end_layout
+
+\begin_layout Plain Layout
+
+	int imaxLast;     /* Порядковый номер последнего максимума */
+\end_layout
+
+\begin_layout Plain Layout
+
+	int t;
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> t;
+\end_layout
+
+\begin_layout Plain Layout
+
+	max = t;
+\end_layout
+
+\begin_layout Plain Layout
+
+	/* Будем считать, что у первого элемента порядковый номер 1 */
+\end_layout
+
+\begin_layout Plain Layout
+
+	imaxFirst = imaxLast = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	/* Переменная цикла всегда на 1 меньше порядкового номера элемента последовател
+ьности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 1; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		/* Первый максимум: строгое неравенство */
+\end_layout
+
+\begin_layout Plain Layout
+
+		if (a > max)
+\end_layout
+
+\begin_layout Plain Layout
+
+		{
+\end_layout
+
+\begin_layout Plain Layout
+
+			max = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+			imaxFirst = i + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+		/* Последний максимум: нестрогое неравенство */
+\end_layout
+
+\begin_layout Plain Layout
+
+		if (a >= max)
+\end_layout
+
+\begin_layout Plain Layout
+
+		{
+\end_layout
+
+\begin_layout Plain Layout
+
+			max = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+			imaxLast = i + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::cout << "max: " << max << ", first seen at: " << imaxFirst << ",
+ last seen at: " << imaxLast << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Поиск элемента в последовательности
+\end_layout
+
+\begin_layout Standard
+Пусть нам требуется определить, есть ли в последовательности элемент с заданным
+ значением, и если есть - то на каком месте.
+ Задача очень похожа на порядковый номер минимума/максимума, с той лишь
+ разницей, что проверяем мы элемент на строгое равенство.
+ Опять же, в зависимости от задачи нам может потребоваться найти порядковый
+ номер первого/последнего вхождения заданного элемента.
+ Для этого можно использовать значение-метку.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	int n;       /* Длина последовательности */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> n;
+\end_layout
+
+\begin_layout Plain Layout
+
+	int toFind;  /* Значение, которое надо найти */
+\end_layout
+
+\begin_layout Plain Layout
+
+	std::cin >> toFind;
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Первое и последнее вхождения заданного элемента; значение -1 является
+ значением-меткой, означающим, что заданное число в последовательности отсутство
+вало */
+\end_layout
+
+\begin_layout Plain Layout
+
+	int firstIdx = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	int lastIdx = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	for(int i = 0; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		if (a == toFind)
+\end_layout
+
+\begin_layout Plain Layout
+
+		{
+\end_layout
+
+\begin_layout Plain Layout
+
+			/* Поиск первого вхождения: если здесь стоит что-то, отличное от значения-мет
+ки, не перезаписываем порядковый номер */
+\end_layout
+
+\begin_layout Plain Layout
+
+			if (firstIdx == -1) firstIdx = i + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+			/* Поиск последнего вхождения: в любом случае перезаписываем порядковый
+ номер */
+\end_layout
+
+\begin_layout Plain Layout
+
+			lastIdx = i + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+    /* Проверяем, нашли ли мы хотя бы одно совпавшее число.
+ Достаточно проверить только порядковый номер первого вхождения */
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (firstIdx != -1)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "first occurrence: " << firstIdx << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "last occurrence: " << lastIdx << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	else
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cout << "number not in sequence" << std::endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Управление ходом цикла
+\end_layout
+
+\begin_layout Standard
+В ряде случаев (как, например, в пункте 2.4 при нахождении первого вхождения)
+ алгоритм строится так, что выполнять все итерации цикла бессмысленно; возникают
+ и другие ситуации, в которых текущую итерацию цикла следует прервать и
+ перейти к следующей.
+ Для выполнения этих действий в языке 
+\series bold
+C++ 
+\series default
+существуют два ключевых слова: 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+break
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset listings
+lstparams "language={C++}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+continue
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Первое прерывает выполнение текущего цикла (если циклы вложены - то прерывается
+ только самый внутренний цикл).
+ В пункте 2.4 при нахождении первого вхождения разумно сделать именно это:
+ в таком случае код для нахождения первого вхождения выглядел бы так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},numbers=left,breaklines=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	for(int i = 0; i < n; ++i)
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		int a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		std::cin >> a;
+\end_layout
+
+\begin_layout Plain Layout
+
+		if (a == toFind)
+\end_layout
+
+\begin_layout Plain Layout
+
+		{
+\end_layout
+
+\begin_layout Plain Layout
+
+			/* Поиск первого вхождения: если здесь стоит что-то, отличное от значения-мет
+ки, не перезаписываем порядковый номер */
+\end_layout
+
+\begin_layout Plain Layout
+
+			if (firstIdx == -1)
+\end_layout
+
+\begin_layout Plain Layout
+
+			{
+\end_layout
+
+\begin_layout Plain Layout
+
+				firstIdx = i + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+				break;
+\end_layout
+
+\begin_layout Plain Layout
+
+			}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Второе переносит выполнение цикла 
+\series bold
+в конец тела цикла
+\series default
+, условно - после последнего выражения внутри цикла.
+ В случае с циклом перечисления это означает, что будет выполнен 
+\emph on
+шаг цикла
+\emph default
+ и проверено 
+\emph on
+условие
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Следует отметить, что эти ключевые слова следует использовать весьма ограниченно
+: они затрудняют чтение кода и в некоторых случаях (это в большей степени
+ касается написания кода, выполняемого, например, на видеопроцессорах) не
+ улучшают или даже ухудшают его производительность.
+\end_layout
+
+\end_body
+\end_document
